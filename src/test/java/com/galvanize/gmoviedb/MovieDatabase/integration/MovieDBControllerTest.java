@@ -69,6 +69,31 @@ public class MovieDBControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void getMovieTest() throws Exception{
+
+        RequestBuilder req=post("/moviedb/movie")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .queryParam("title","The Avengers")
+                .queryParam("release","2012")
+                .queryParam("director","Joss Whedon");
+
+        mockMvc.perform(req)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("id").isNotEmpty())
+                .andDo(print());
+
+        RequestBuilder listReq = get("/moviedb/list")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(listReq)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(1)))
+                .andDo(print());
+
+    }
+
 
 
 }
