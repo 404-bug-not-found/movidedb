@@ -29,7 +29,7 @@ public class MovieDBControllerTest {
 
 
     @Test
-    public void emptyMovieDBTest() throws Exception{
+    public void getEmptyMovieDB_Test() throws Exception{
 
         RequestBuilder req = get("/moviedb/list")
                 .accept(MediaType.APPLICATION_JSON);
@@ -55,7 +55,7 @@ public class MovieDBControllerTest {
 //    }
 
     @Test
-    public void newMovieDBTest() throws Exception{
+    public void post_NewMovieDB_Test() throws Exception{
 
         RequestBuilder req=post("/moviedb/movie")
                 .accept(MediaType.APPLICATION_JSON)
@@ -70,7 +70,7 @@ public class MovieDBControllerTest {
     }
 
     @Test
-    public void getMovieTest() throws Exception{
+    public void getSingleMovieTest() throws Exception{
 
         RequestBuilder req=post("/moviedb/movie")
                 .accept(MediaType.APPLICATION_JSON)
@@ -93,6 +93,8 @@ public class MovieDBControllerTest {
                 .andDo(print());
 
     }
+
+
 
 
 
