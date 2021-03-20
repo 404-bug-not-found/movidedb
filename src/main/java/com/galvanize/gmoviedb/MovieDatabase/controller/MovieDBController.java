@@ -29,4 +29,9 @@ public class MovieDBController {
     public ResponseEntity<Movie> postMovie(@RequestParam String title, @RequestParam String release, @RequestParam String director){
      return movieService.createMovie(title,release,director);
     }
+
+    @GetMapping("/movie")
+    public ResponseEntity<Movie> getMovie(@RequestParam String title){
+        return movieService.getMovie(title);
+    }
 }

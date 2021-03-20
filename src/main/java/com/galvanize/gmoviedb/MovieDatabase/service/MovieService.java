@@ -11,8 +11,10 @@ import java.util.List;
 
 @Service
 public class MovieService {
+
     @Autowired
     MovieRepository movieRepository;
+
     public ResponseEntity<Movie> createMovie(String title, String release, String director) {
         Movie movie=new Movie(title,release,director);
         Movie savedMovie= movieRepository.save(movie);
@@ -23,5 +25,11 @@ public class MovieService {
     public ResponseEntity<List<Movie>> getAllMovies() {
 
         return new ResponseEntity<List<Movie>> (movieRepository.findAll(),HttpStatus.OK);
+    }
+
+    public ResponseEntity<Movie> getMovie(String title) {
+
+        Movie movie = movieRepository.findByTitle(title);
+        return new ResponseEntity<Movie> (movie,HttpStatus.OK);
     }
 }

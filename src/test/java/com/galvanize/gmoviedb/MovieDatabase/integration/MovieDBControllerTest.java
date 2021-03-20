@@ -28,6 +28,19 @@ public class MovieDBControllerTest {
 //    Then I should see no movies
 
 
+    //Helper method to post a movie
+    public RequestBuilder postMovie(String title, String release, String director){
+
+        RequestBuilder req=post("/moviedb/movie")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .queryParam("title",title)
+                .queryParam("release",release)
+                .queryParam("director",director);
+
+        return req;
+    }
+
     @Test
     public void getEmptyMovieDB_Test() throws Exception{
 
@@ -90,11 +103,56 @@ public class MovieDBControllerTest {
         mockMvc.perform(listReq)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("$[0].title").value("The Avengers"))
                 .andDo(print());
 
     }
 
+    @Test
+    public void getPerticularMovieTest() throws Exception{
 
+        RequestBuilder req1 = postMovie("Superman Returns","2006","Bryan Singer");
+        RequestBuilder req2 = postMovie("Steel","1997","Kenneth Johnson");
+        RequestBuilder req3 = postMovie("Unbreakable","2000","M. Night Shyamalan");
+
+
+        mockMvc.perform(req1)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+
+        mockMvc.perform(req2)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+
+        mockMvc.perform(req3)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        RequestBuilder listReq = get("/moviedb/list")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(listReq)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Superman Returns"))
+                .andExpect(jsonPath("$[1].title").value("Steel"))
+                .andExpect(jsonPath("$[2].title").value("Unbreakable"))
+                .andDo(print());
+
+        RequestBuilder rq = get("/moviedb/movie")
+                .queryParam("title","Steel")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(rq)
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("title").value("Steel"))
+                .andExpect(jsonPath("release").value("1997"))
+                .andExpect(jsonPath("director").value("Kenneth Johnson"))
+                .andDo(print());
+
+    }
 
 
 
