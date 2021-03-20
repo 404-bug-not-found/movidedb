@@ -41,7 +41,7 @@ public class MovieService {
     public ResponseEntity<?> getAverageRating(String title) {
         Movie movie = movieRepository.findByTitle(title);
         Rating ratingEntity = new Rating();
-        Double averageRating= movie.getRatingList().stream().mapToDouble(x->x.getRating()).average().getAsDouble();
+        Double averageRating= Math.ceil(movie.getRatingList().stream().mapToDouble(x->x.getRating()).average().getAsDouble());
         return new ResponseEntity<Double> (averageRating, HttpStatus.OK);
 
     }
