@@ -31,7 +31,7 @@ public class MovieDBController {
     }
 
     @GetMapping("/movie")
-    public ResponseEntity<Movie> getMovie(@RequestParam String title){
+    public ResponseEntity<?> getMovie(@RequestParam String title){
         return movieService.getMovie(title);
     }
 }

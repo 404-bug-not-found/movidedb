@@ -27,9 +27,13 @@ public class MovieService {
         return new ResponseEntity<List<Movie>> (movieRepository.findAll(),HttpStatus.OK);
     }
 
-    public ResponseEntity<Movie> getMovie(String title) {
+    public ResponseEntity<?> getMovie(String title) {
 
         Movie movie = movieRepository.findByTitle(title);
+        if (movie==null) {
+            return new ResponseEntity<String> ("{\"message\":\"Movie Does Not Exists\"}}",HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<Movie> (movie,HttpStatus.OK);
     }
 }

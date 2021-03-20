@@ -153,7 +153,43 @@ public class MovieDBControllerTest {
                 .andDo(print());
 
     }
+//
+//
+//    Given the GMDB has many movies
+//    When I visit GMDB movies with a non-existing title
+//    Then I receive a friendly message that it doesn't exist
+    @Test
+    public void getParticularMovie_DoesNotExists_Test() throws Exception {
+
+        RequestBuilder req1 = postMovie("The Lego Batman Movie","2017","Chris McKay");
+        RequestBuilder req2 = postMovie("The Incredibles","2004","Brad Bird");
+        RequestBuilder req3 = postMovie("Rocketeer","2012","Jay Light");
 
 
+        mockMvc.perform(req1)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+
+        mockMvc.perform(req2)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+
+        mockMvc.perform(req3)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        RequestBuilder rq = get("/moviedb/movie")
+                .queryParam("title","500 days with her")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(rq)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Movie Does Not Exists"))
+                .andDo(print());
+
+
+    }
 
 }
