@@ -153,8 +153,7 @@ public class MovieDBControllerTest {
                 .andDo(print());
 
     }
-//
-//
+
 //    Given the GMDB has many movies
 //    When I visit GMDB movies with a non-existing title
 //    Then I receive a friendly message that it doesn't exist
@@ -219,6 +218,60 @@ public class MovieDBControllerTest {
                 //.andExpect(jsonPath("id").isNotEmpty())
                 .andDo(print());
 
+
     }
+//
+//    Given a movie with one 5 star rating and one 3 star rating
+//    When I view the movie details
+//    Then I expect the star rating to be 4.
+    @Test
+    public void getMovieRatingAvg_Test() throws Exception {
+
+        RequestBuilder req1 = postMovie("The Lego Batman Movie","2017","Chris McKay");
+        RequestBuilder req2 = postMovie("The Incredibles","2004","Brad Bird");
+        RequestBuilder req3 = postMovie("Rocketeer","2012","Jay Light");
+
+        mockMvc.perform(req1)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        mockMvc.perform(req2)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        mockMvc.perform(req3)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        RequestBuilder rq1 = post("/moviedb/movie/rating")
+                .queryParam("title","The Incredibles")
+                .queryParam("rating","4")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(rq1)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        RequestBuilder rq2 = post("/moviedb/movie/rating")
+                .queryParam("title","The Incredibles")
+                .queryParam("rating","3")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(rq2)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        RequestBuilder rq = get("/moviedb/movie/averagerating")
+                .queryParam("title","The Incredibles")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(rq)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("rating").value("4"))
+                .andDo(print());
+
+    }
+
+
 
 }
