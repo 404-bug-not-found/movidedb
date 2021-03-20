@@ -170,11 +170,9 @@ public class MovieDBControllerTest {
                 .andExpect(status().isCreated())
                 .andDo(print());
 
-
         mockMvc.perform(req2)
                 .andExpect(status().isCreated())
                 .andDo(print());
-
 
         mockMvc.perform(req3)
                 .andExpect(status().isCreated())
@@ -189,6 +187,37 @@ public class MovieDBControllerTest {
                 .andExpect(jsonPath("message").value("Movie Does Not Exists"))
                 .andDo(print());
 
+
+    }
+
+    @Test
+    public void postMovieRating_Test() throws Exception {
+
+        RequestBuilder req1 = postMovie("The Lego Batman Movie","2017","Chris McKay");
+        RequestBuilder req2 = postMovie("The Incredibles","2004","Brad Bird");
+        RequestBuilder req3 = postMovie("Rocketeer","2012","Jay Light");
+
+        mockMvc.perform(req1)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        mockMvc.perform(req2)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        mockMvc.perform(req3)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        RequestBuilder rq = post("/moviedb/movie/rating")
+                .queryParam("title","The Incredibles")
+                .queryParam("rating","5")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(rq)
+                .andExpect(status().isCreated())
+                //.andExpect(jsonPath("id").isNotEmpty())
+                .andDo(print());
 
     }
 

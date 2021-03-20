@@ -1,7 +1,9 @@
 package com.galvanize.gmoviedb.MovieDatabase.controller;
 
 import com.galvanize.gmoviedb.MovieDatabase.entity.Movie;
+import com.galvanize.gmoviedb.MovieDatabase.entity.Rating;
 import com.galvanize.gmoviedb.MovieDatabase.service.MovieService;
+import com.galvanize.gmoviedb.MovieDatabase.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ public class MovieDBController {
 
     @Autowired
     MovieService movieService;
+
+    @Autowired
+    RatingService ratingService;
 
     @GetMapping("/list")
     public ResponseEntity<List<Movie>> getAllMovies(){
@@ -33,5 +38,12 @@ public class MovieDBController {
     @GetMapping("/movie")
     public ResponseEntity<?> getMovie(@RequestParam String title){
         return movieService.getMovie(title);
+    }
+
+    //"/moviedb/movie/rating"
+
+    @PostMapping("/movie/rating")
+    public ResponseEntity<Rating> postMovieRating(@RequestParam String title, @RequestParam String rating){
+        return ratingService.setMovieRating(title,rating);
     }
 }
