@@ -1,6 +1,7 @@
 package com.galvanize.gmoviedb.MovieDatabase.service;
 
 import com.galvanize.gmoviedb.MovieDatabase.entity.Movie;
+import com.galvanize.gmoviedb.MovieDatabase.entity.Rating;
 import com.galvanize.gmoviedb.MovieDatabase.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,12 @@ public class MovieService {
         return new ResponseEntity<Movie> (movie,HttpStatus.OK);
     }
 
+    public ResponseEntity<?> getAverageRating(String title) {
+        Movie movie = movieRepository.findByTitle(title);
+        Rating ratingEntity = new Rating();
+        Double averageRating= movie.getRatingList().stream().mapToDouble(x->x.getRating()).average().getAsDouble();
+        return new ResponseEntity<Double> (averageRating, HttpStatus.OK);
+
+    }
 
 }

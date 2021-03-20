@@ -31,4 +31,5 @@ public class RatingService {
         return new ResponseEntity<>(savedRating, HttpStatus.CREATED);
 
     }
+
 }

@@ -267,7 +267,7 @@ public class MovieDBControllerTest {
 
         mockMvc.perform(rq)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("rating").value("4"))
+                .andExpect(jsonPath("$").value("3.5"))
                 .andDo(print());
 
     }

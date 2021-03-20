@@ -46,4 +46,10 @@ public class MovieDBController {
     public ResponseEntity<Rating> postMovieRating(@RequestParam String title, @RequestParam String rating){
         return ratingService.setMovieRating(title,rating);
     }
+
+    @GetMapping("movie/averagerating")
+    public ResponseEntity<?> getMovieAverageRating(@RequestParam String title){
+        return movieService.getAverageRating(title);
+
+    }
 }
