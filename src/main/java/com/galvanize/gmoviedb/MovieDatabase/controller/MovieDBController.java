@@ -52,4 +52,11 @@ public class MovieDBController {
         return movieService.getAverageRating(title);
 
     }
+
+    @PostMapping("/movie/review")
+    public ResponseEntity<Rating> postMovieReviewAndRating(
+            @RequestParam String title, @RequestParam String rating, @RequestParam String review){
+        return ratingService.setMovieReviewAndRating(title,rating, review);
+    }
+
 }

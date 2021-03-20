@@ -20,6 +20,9 @@ public class Rating {
     @Column(name="rating")
     private Long rating;
 
+    @Column(name="review")
+    private String review;
+
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;

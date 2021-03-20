@@ -32,4 +32,16 @@ public class RatingService {
 
     }
 
+    public ResponseEntity<Rating> setMovieReviewAndRating(String title, String rating, String review) {
+
+        Movie movie = movieRepository.findByTitle(title);
+        Rating ratingEntity = new Rating();
+        ratingEntity.setRating(Long.valueOf(rating));
+        ratingEntity.setReview(review);
+        ratingEntity.setMovie(movie);
+
+        Rating savedRating = ratingRepository.save(ratingEntity);
+
+        return new ResponseEntity<>(savedRating, HttpStatus.CREATED);
+    }
 }
