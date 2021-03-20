@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/moviedb")
 public class MovieDBController {
@@ -15,9 +17,11 @@ public class MovieDBController {
     MovieService movieService;
 
     @GetMapping("/list")
-    public String getAllMovies(){
+    public ResponseEntity<List<Movie>> getAllMovies(){
 
-        return "[]";
+        //return "[]";
+
+        return movieService.getAllMovies();
 
     }
 

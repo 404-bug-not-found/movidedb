@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MovieService {
     @Autowired
@@ -16,5 +18,10 @@ public class MovieService {
         Movie savedMovie= movieRepository.save(movie);
         return new ResponseEntity<>(savedMovie, HttpStatus.CREATED);
 
+    }
+
+    public ResponseEntity<List<Movie>> getAllMovies() {
+
+        return new ResponseEntity<List<Movie>> (movieRepository.findAll(),HttpStatus.OK);
     }
 }
